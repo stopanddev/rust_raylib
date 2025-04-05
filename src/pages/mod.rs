@@ -1,1 +1,1 @@
-pub mod transaction_page;
+pub mod transaction_page_handler;

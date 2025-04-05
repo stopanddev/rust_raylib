@@ -3,6 +3,8 @@ mod color_config;
 mod grid_builder;
 mod pages;
 mod ui_legos;
+
+use pages::transaction_page_handler::*;
 fn main() {
     // Initialize the window
     let screen_width = 960;
@@ -15,28 +17,26 @@ fn main() {
         .title("Raylib Button Example")
         .build();
     let my_font = rl.load_font(&thread, "resources/Lato.ttf").unwrap();
-    // Define button dimensions and positions
-    //let button_1 = Rectangle::new(100.0, 100.0, 200.0, 50.0);
 
-    // Main game loop
+    // Main loop
     while !rl.window_should_close() {
         // Start drawing
         let mut d = rl.begin_drawing(&thread);
 
-        // Clear the screen with a color (dark gray)
+        // Clear the screen with background color 
         d.clear_background(color_config::color_scheme::BACKGROUND_GREEN);
-
+        // Debug looop
         for x in 0..canvas_grid.x_count
         {
             for y in 0..canvas_grid.y_count
             {
                 // Debug Grid 
-//                d.draw_rectangle_lines(x * canvas_grid.x_cell_width as i32 , y * canvas_grid.y_cell_height as i32, canvas_grid.x_cell_width as i32, canvas_grid.y_cell_height as i32, Color::GRAY);
+                d.draw_rectangle_lines(x * canvas_grid.x_cell_width as i32 , y * canvas_grid.y_cell_height as i32, canvas_grid.x_cell_width as i32, canvas_grid.y_cell_height as i32, Color::SKYBLUE);
             }
         }
         // Get the mouse position
        ////////////////// let mouse_pos = d.get_mouse_position();
-        pages::transaction_page::draw_transaction_page(&mut d,&canvas_grid, &my_font);
+        draw_transaction_page(&mut d,&canvas_grid, &my_font);
         // Check if the mouse is inside button 1
         /*if is_point_in_rectangle(mouse_pos.x, mouse_pos.y, button_1)
             && d.is_mouse_button_pressed(MouseButton::MOUSE_BUTTON_LEFT)
@@ -50,14 +50,6 @@ fn main() {
         {
             println!("Button 2 clicked!");
         }
-
-        // Draw the buttons
-        d.draw_rectangle_rec(button_1, Color::BLUE);
-        d.draw_rectangle_rec(button_2, Color::GREEN);
-
-        // Draw text on the buttons
-        d.draw_text("Button 1", button_1.x as i32 + 70, button_1.y as i32 + 15, 20, Color::WHITE);
-        d.draw_text("Button 2", button_2.x as i32 + 70, button_2.y as i32 + 15, 20, Color::WHITE);
         */
     }
 }
