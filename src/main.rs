@@ -15,7 +15,6 @@ fn main() {
         .title("Raylib Button Example")
         .build();
     let my_font = rl.load_font(&thread, "resources/Lato.ttf").unwrap();
-    println!("Loaded font");
     // Define button dimensions and positions
     //let button_1 = Rectangle::new(100.0, 100.0, 200.0, 50.0);
 
@@ -37,7 +36,6 @@ fn main() {
         }
         // Get the mouse position
        ////////////////// let mouse_pos = d.get_mouse_position();
-        println!("Drawing Page");
         pages::transaction_page::draw_transaction_page(&mut d,&canvas_grid, &my_font);
         // Check if the mouse is inside button 1
         /*if is_point_in_rectangle(mouse_pos.x, mouse_pos.y, button_1)
