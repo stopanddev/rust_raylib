@@ -1,0 +1,40 @@
+# Ignore build artifacts
+/target/
+
+# Ignore Rust build output
+**/*.rs.bk
+
+# Ignore the Rust editor configuration files
+.idea/
+.vscode/
+
+# Ignore dependency directories
+**/target/
+
+# Ignore Cargo.lock (optional: you may want to track it if you want reproducible builds)
+# /Cargo.lock
+
+# Ignore various IDE configuration files
+*.swp
+*.swo
+*.bak
+*.orig
+*.log
+
+# Ignore macOS Finder metadata
+.DS_Store
+
+# Ignore Linux thumbnail cache
+.thumbnails/
+
+# Ignore Windows thumbnail cache
+Thumbs.db
+
+# Ignore Rust's debugging output files
+*.dSYM/
+
+# Ignore Rust's debug files
+*.rls
+
+# Ignore cargo's target folder for specific crate builds
+Cargo.lock/target
