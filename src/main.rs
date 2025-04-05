@@ -1,4 +1,5 @@
 use raylib::prelude::*;
+mod color_config;
 mod grid_builder;
 mod pages;
 mod ui_legos;
@@ -6,15 +7,15 @@ fn main() {
     // Initialize the window
     let screen_width = 960;
     let screen_height = 540;
-    let x_grid_count = 20; 
-    let y_grid_count = 20; 
-    let x_grid_size = screen_width / x_grid_count;
-    let y_grid_size = screen_height / y_grid_count;
+    let x_grid_count = 50; 
+    let y_grid_count = 50; 
     let canvas_grid = grid_builder::Grid::new(x_grid_count, y_grid_count,screen_width,screen_height);
     let (mut rl, thread) = raylib::init()
         .size(screen_width,screen_height)
         .title("Raylib Button Example")
         .build();
+    let my_font = rl.load_font(&thread, "resources/Lato.ttf").unwrap();
+    println!("Loaded font");
     // Define button dimensions and positions
     //let button_1 = Rectangle::new(100.0, 100.0, 200.0, 50.0);
 
@@ -24,19 +25,20 @@ fn main() {
         let mut d = rl.begin_drawing(&thread);
 
         // Clear the screen with a color (dark gray)
-        d.clear_background(Color::DARKGREEN);
+        d.clear_background(color_config::color_scheme::BACKGROUND_GREEN);
 
         for x in 0..canvas_grid.x_count
         {
             for y in 0..canvas_grid.y_count
             {
                 // Debug Grid 
-                d.draw_rectangle_lines(x * canvas_grid.x_cell_width , y * canvas_grid.y_cell_height, canvas_grid.x_cell_width, canvas_grid.y_cell_height, Color::GRAY);
+//                d.draw_rectangle_lines(x * canvas_grid.x_cell_width as i32 , y * canvas_grid.y_cell_height as i32, canvas_grid.x_cell_width as i32, canvas_grid.y_cell_height as i32, Color::GRAY);
             }
         }
         // Get the mouse position
        ////////////////// let mouse_pos = d.get_mouse_position();
-        pages::transaction_page::draw_transaction_page(&mut d, &x_grid_size, &y_grid_size);
+        println!("Drawing Page");
+        pages::transaction_page::draw_transaction_page(&mut d,&canvas_grid, &my_font);
         // Check if the mouse is inside button 1
         /*if is_point_in_rectangle(mouse_pos.x, mouse_pos.y, button_1)
             && d.is_mouse_button_pressed(MouseButton::MOUSE_BUTTON_LEFT)
@@ -66,3 +68,5 @@ fn main() {
 fn is_point_in_rectangle(px: f32, py: f32, rect: Rectangle) -> bool {
     px >= rect.x && px <= rect.x + rect.width && py >= rect.y && py <= rect.y + rect.height
 }
+
+

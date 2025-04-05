@@ -1,10 +1,45 @@
 use raylib::prelude::*;
-pub fn draw_med_button(pos_x: f32, pos_y: f32, x_size: f32, y_size: f32, words: String, d: &mut RaylibDrawHandle)
+use crate::grid_builder::Grid;
+use crate::color_config::color_scheme;
+pub fn draw_med_button(pos_x: i32, pos_y: i32, canvas_grid: &Grid, words: String, d: &mut RaylibDrawHandle, my_font: &Font)
 {
-    // Shadow
-    let button_shadow = Rectangle::new(pos_x+5.0, pos_y+5.0, 32.0, 25.0); 
-    d.draw_rectangle_rounded(button_shadow,0.6,10,Color::DARKBLUE); 
+    println!("In draw button");
+    let translated_pos_x = (pos_x as f32 -1.0) * canvas_grid.x_cell_width;
+    let translated_pos_y = (pos_y as f32 -1.0) * canvas_grid.y_cell_height;
 
-    let button = Rectangle::new(pos_x, pos_y, 32.0, 25.0); 
-    d.draw_rectangle_rounded(button,0.6,10,Color::BLUE); 
+    // Shadow
+    let button_shadow = Rectangle::new(translated_pos_x + 2.5, translated_pos_y + 2.5, canvas_grid.x_cell_width * 7.0, canvas_grid.y_cell_height * 7.0); 
+    d.draw_rectangle_rounded(button_shadow,1.0,10,color_scheme::DARK_GREEN); 
+
+    let button = Rectangle::new(translated_pos_x, translated_pos_y, canvas_grid.x_cell_width * 7.0, canvas_grid.y_cell_height * 7.0); 
+    d.draw_rectangle_rounded(button,1.0,10,color_scheme::SECONDARY_GREEN); 
+     // Get the current words width and height
+
+    let mut current_font_size = 32.0; 
+        // Use a loop to scale the words down until it fits inside the rectangle
+        loop {
+            // Calculate the words width and height using the current font size
+            let text_width = d.measure_text(&words, current_font_size as i32);
+            let text_height = current_font_size * 1.5;
+
+            // Break the loop if the words fits within the rectangle
+            if text_width <= button.width as i32 && text_height <= button.height {
+                break;
+            }
+            // If the width is not changing anymore (i.e., we've hit the minimum size)
+            if text_width == 43 && current_font_size <= 1.0 {
+                break; // Exit the loop if the text width is fixed at a minimum
+            }
+            // Decrease the font size if the words does not fit
+            current_font_size -= 1.0;
+        }
+
+    // Calculate the position for the words to be centered inside the rectangle
+    let final_text_width = d.measure_text(&words, current_font_size as i32);
+    let final_text_height = current_font_size * 1.5;
+    let x_offset = (button.width final_text_width as f32);
+    println!("My X offset {}",x_offset);
+    let y_offset = (button.height - final_text_height) / 2.0;
+    let pos = Vector2 { x: translated_pos_x + x_offset, y: translated_pos_y + y_offset };
+    d.draw_text_ex(my_font, &words, pos, current_font_size, 1.0, color_scheme::TEXT_COLOR);
 }

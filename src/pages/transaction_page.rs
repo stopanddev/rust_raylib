@@ -1,9 +1,9 @@
 use crate::ui_legos::buttons::*;
 use raylib::prelude::*;
-
-pub fn draw_transaction_page(d: &mut RaylibDrawHandle, x_size: &f32, y_size: &f32)
+use crate::grid_builder::Grid;
+pub fn draw_transaction_page(d: &mut RaylibDrawHandle, canvas_grid: &Grid, my_font: &Font)
 {
-    draw_med_button(32.0, 32.0, String::from("Test"), d);
+    draw_med_button(4, 4, canvas_grid, String::from("Big Test"), d, my_font);
 }
 
 
