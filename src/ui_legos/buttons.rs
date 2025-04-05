@@ -7,12 +7,11 @@ pub fn draw_med_button(pos_x: i32, pos_y: i32, canvas_grid: &Grid, words: String
     let translated_pos_y = (pos_y as f32 -1.0) * canvas_grid.y_cell_height;
 
     // Shadow
-    let button_shadow = Rectangle::new(translated_pos_x + 2.5, translated_pos_y + 2.5, canvas_grid.x_cell_width * 7.0, canvas_grid.y_cell_height * 7.0); 
+    let button_shadow = Rectangle::new(translated_pos_x + 2.5, translated_pos_y + 2.5, canvas_grid.x_cell_width * 5.0, canvas_grid.y_cell_height * 4.0); 
     d.draw_rectangle_rounded(button_shadow,1.0,10,color_scheme::DARK_GREEN); 
 
-    let button = Rectangle::new(translated_pos_x, translated_pos_y, canvas_grid.x_cell_width * 7.0, canvas_grid.y_cell_height * 7.0); 
+    let button = Rectangle::new(translated_pos_x, translated_pos_y, canvas_grid.x_cell_width * 5.0, canvas_grid.y_cell_height * 4.0); 
     d.draw_rectangle_rounded(button,1.0,10,color_scheme::SECONDARY_GREEN); 
-     // Get the current words width and height
 
     let mut current_font_size = 50.0; 
         // Use a loop to scale the words down until it fits inside the rectangle
@@ -27,7 +26,7 @@ pub fn draw_med_button(pos_x: i32, pos_y: i32, canvas_grid: &Grid, words: String
             }
             // If the width is not changing anymore (i.e., we've hit the minimum size)
             if text_width == 43 && current_font_size <= 1.0 {
-                break; // Exit the loop if the text width is fixed at a minimum
+                break; 
             }
             // Decrease the font size if the words does not fit
             current_font_size -= 1.0;
