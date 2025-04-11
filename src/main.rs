@@ -3,8 +3,8 @@ mod color_config;
 mod grid_builder;
 mod pages;
 mod ui_legos;
-
 use pages::transaction_page_handler::*;
+use pages::page_core::*;
 fn main() {
     // Initialize the window
     let screen_width = 960;
@@ -17,7 +17,7 @@ fn main() {
         .title("Raylib Button Example")
         .build();
     let my_font = rl.load_font(&thread, "resources/Lato.ttf").unwrap();
-
+    let mut current_page = StructPage {id: PageEnum::Transaction, elements: Vec::new(), layers: [0,0,0,0], instantiated: false };
     // Main loop
     while !rl.window_should_close() {
         // Start drawing
@@ -26,7 +26,7 @@ fn main() {
         // Clear the screen with background color 
         d.clear_background(color_config::color_scheme::BACKGROUND_GREEN);
         // Debug looop
-        for x in 0..canvas_grid.x_count
+/*        for x in 0..canvas_grid.x_count
         {
             for y in 0..canvas_grid.y_count
             {
@@ -34,9 +34,15 @@ fn main() {
                 d.draw_rectangle_lines(x * canvas_grid.x_cell_width as i32 , y * canvas_grid.y_cell_height as i32, canvas_grid.x_cell_width as i32, canvas_grid.y_cell_height as i32, Color::SKYBLUE);
             }
         }
+*/
         // Get the mouse position
        ////////////////// let mouse_pos = d.get_mouse_position();
-        draw_transaction_page(&mut d,&canvas_grid, &my_font);
+        if !&current_page.instantiated 
+        {
+            current_page = init_page_tree(PageEnum::Transaction)
+        }
+
+        draw_page_tree(&canvas_grid, &mut d, &my_font, &current_page)
         // Check if the mouse is inside button 1
         /*if is_point_in_rectangle(mouse_pos.x, mouse_pos.y, button_1)
             && d.is_mouse_button_pressed(MouseButton::MOUSE_BUTTON_LEFT)
